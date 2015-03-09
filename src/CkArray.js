@@ -61,7 +61,17 @@
 
   })(Array);
 
-  module.exports = CkArray;
+  (function() {
+    var definition;
+    definition = function() {
+      return CkArray;
+    };
+    if (typeof module !== void 0) {
+      return module.exports = definition();
+    } else if (typeof define === 'function' && typeof define.amd === 'object') {
+      return define(definition);
+    }
+  })();
 
 }).call(this);
 

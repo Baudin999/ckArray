@@ -42,5 +42,14 @@ class CkArray extends Array
     this.observers.push observer
 
 
+# support both AMD and CommonJS for modularity
+do () ->
 
-module.exports = CkArray
+  # a definition function which when invoked returns the CkArray class
+  # because the two patterns, AMD and CommonJS work differently we needed
+  # a wrapper function to contain the actual module result
+  definition = () -> CkArray
+
+  if typeof module isnt undefined then module.exports = definition()
+  else if typeof define is 'function' and typeof define.amd is 'object'
+    define(definition)
