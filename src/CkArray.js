@@ -7,7 +7,7 @@
   CkArray = (function(superClass) {
     extend(CkArray, superClass);
 
-    function CkArray() {
+    function CkArray(items) {
       this.observers = [];
       this.push = function() {
         var args, result;
@@ -42,12 +42,12 @@
         args = Array.prototype.slice.call(arguments);
         this.observers.map(function(observer) {
           var ref;
-          return (ref = observer.preSplice) != null ? ref.apply(null, args) : void 0;
+          return (ref = observer.preSlice) != null ? ref.apply(null, args) : void 0;
         });
-        result = Array.prototype.slice.call(this, args);
+        result = Array.prototype.slice.apply(this, args);
         this.observers.map(function(observer) {
           var ref;
-          return (ref = observer.postSlice) != null ? ref.apply(null, args) : void 0;
+          return (ref = observer.postSlice) != null ? ref.call(null, result) : void 0;
         });
         return result;
       };

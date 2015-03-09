@@ -14,6 +14,7 @@ describe 'A test suite for the CkArray class', () ->
     a = new CkArray()
     expect(a).not.toBeNull()
     expect(a).not.toBeUndefined()
+    expect(a instanceof Array).toMatch(/true/)
 
   it 'should have a length property', () ->
     expect(a.length).toBeDefined()
@@ -39,5 +40,29 @@ describe 'A test suite for the CkArray class', () ->
 
     expect(preItem).toEqual(13)
     expect(postItem).toEqual(13)
+
+
+  # testing "slice"
+  it 'should be able to observe changes from slice', () ->
+
+    CkArray = require './../src/CkArray'
+    a = new CkArray()
+
+    [1,2,3,4,5,6,7,8,9].forEach (n) -> a.push n
+
+    preSlice = undefined
+    postSlice = undefined
+
+    a.observe {
+      preSlice: () -> preSlice = {}
+      postSlice: (items) -> postSlice = items
+    }
+
+    a.slice 4, 6
+
+    expect(preSlice).not.toBeUndefined()
+    expect(postSlice).not.toBeUndefined()
+    expect(postSlice instanceof Array).toMatch(/true/)
+    expect(postSlice.length).toEqual(2, 'length is not correct')
 
 

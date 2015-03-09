@@ -14,7 +14,8 @@
       CkArray = require('./../src/CkArray');
       a = new CkArray();
       expect(a).not.toBeNull();
-      return expect(a).not.toBeUndefined();
+      expect(a).not.toBeUndefined();
+      return expect(a instanceof Array).toMatch(/true/);
     });
     it('should have a length property', function() {
       expect(a.length).toBeDefined();
@@ -25,7 +26,7 @@
       expect(typeof a.push).toEqual('function', 'The push method on the CkArray is not a function');
       return expect(a.push(12)).toEqual(1);
     });
-    return it('should be able to observe changes and handle push messages', function() {
+    it('should be able to observe changes and handle push messages', function() {
       var postItem, preItem;
       expect(a.observe).toBeDefined('CkArray does not have a pushObserve member');
       expect(typeof a.observe).toEqual('function', 'The pushObserve member of CkArray is not a function');
@@ -42,6 +43,29 @@
       a.push(13);
       expect(preItem).toEqual(13);
       return expect(postItem).toEqual(13);
+    });
+    return it('should be able to observe changes from slice', function() {
+      var CkArray, postSlice, preSlice;
+      CkArray = require('./../src/CkArray');
+      a = new CkArray();
+      [1, 2, 3, 4, 5, 6, 7, 8, 9].forEach(function(n) {
+        return a.push(n);
+      });
+      preSlice = void 0;
+      postSlice = void 0;
+      a.observe({
+        preSlice: function() {
+          return preSlice = {};
+        },
+        postSlice: function(items) {
+          return postSlice = items;
+        }
+      });
+      a.slice(4, 6);
+      expect(preSlice).not.toBeUndefined();
+      expect(postSlice).not.toBeUndefined();
+      expect(postSlice instanceof Array).toMatch(/true/);
+      return expect(postSlice.length).toEqual(2, 'length is not correct');
     });
   });
 
