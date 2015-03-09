@@ -15,30 +15,33 @@ class CkArray extends Array
     # the push handler. This function decorates the 'push' method of
     # the array on which my CkArray is based.
     this.push = () ->
+      self = this
       args = Array.prototype.slice.call(arguments)
-      this.observers.map (observer) -> observer.prePush?.apply this, args
+      this.observers.map (observer) -> observer.prePush?.apply self, args
       result = Array.prototype.push.call(this, args)
-      this.observers.map (observer) -> observer.postPush?.apply this, args
+      this.observers.map (observer) -> observer.postPush?.apply self, args
       result
 
 
 
     # the observable splice function
     this.splice = () ->
+      self = this
       args = Array.prototype.slice.call(arguments)
-      this.observers.map (observer) -> observer.preSplice?.apply this, args
+      this.observers.map (observer) -> observer.preSplice?.apply self, args
       result = Array.prototype.splice.apply(this, args)
-      this.observers.map (observer) -> observer.postSplice?.call this, result
+      this.observers.map (observer) -> observer.postSplice?.call self, result
       result
 
 
 
     # an observable slice method
     this.slice = () ->
+      self = this
       args = Array.prototype.slice.call(arguments)
-      this.observers.map (observer) -> observer.preSlice?.apply this, args
+      this.observers.map (observer) -> observer.preSlice?.apply self, args
       result = Array.prototype.slice.apply(this, args)
-      this.observers.map (observer) -> observer.postSlice?.call this, result
+      this.observers.map (observer) -> observer.postSlice?.call self, result
       result
 
 

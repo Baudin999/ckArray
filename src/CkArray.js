@@ -18,43 +18,46 @@
       this.observers = [];
       this.push = function() {
         var args, result;
+        self = this;
         args = Array.prototype.slice.call(arguments);
         this.observers.map(function(observer) {
           var ref;
-          return (ref = observer.prePush) != null ? ref.apply(this, args) : void 0;
+          return (ref = observer.prePush) != null ? ref.apply(self, args) : void 0;
         });
         result = Array.prototype.push.call(this, args);
         this.observers.map(function(observer) {
           var ref;
-          return (ref = observer.postPush) != null ? ref.apply(this, args) : void 0;
+          return (ref = observer.postPush) != null ? ref.apply(self, args) : void 0;
         });
         return result;
       };
       this.splice = function() {
         var args, result;
+        self = this;
         args = Array.prototype.slice.call(arguments);
         this.observers.map(function(observer) {
           var ref;
-          return (ref = observer.preSplice) != null ? ref.apply(this, args) : void 0;
+          return (ref = observer.preSplice) != null ? ref.apply(self, args) : void 0;
         });
         result = Array.prototype.splice.apply(this, args);
         this.observers.map(function(observer) {
           var ref;
-          return (ref = observer.postSplice) != null ? ref.call(this, result) : void 0;
+          return (ref = observer.postSplice) != null ? ref.call(self, result) : void 0;
         });
         return result;
       };
       this.slice = function() {
         var args, result;
+        self = this;
         args = Array.prototype.slice.call(arguments);
         this.observers.map(function(observer) {
           var ref;
-          return (ref = observer.preSlice) != null ? ref.apply(this, args) : void 0;
+          return (ref = observer.preSlice) != null ? ref.apply(self, args) : void 0;
         });
         result = Array.prototype.slice.apply(this, args);
         this.observers.map(function(observer) {
           var ref;
-          return (ref = observer.postSlice) != null ? ref.call(this, result) : void 0;
+          return (ref = observer.postSlice) != null ? ref.call(self, result) : void 0;
         });
         return result;
       };
