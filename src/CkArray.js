@@ -8,6 +8,13 @@
     extend(CkArray, superClass);
 
     function CkArray(items) {
+      var self;
+      self = this;
+      if (items && items instanceof Array) {
+        items.forEach(function(i) {
+          return self.push(i);
+        });
+      }
       this.observers = [];
       this.push = function() {
         var args, result;

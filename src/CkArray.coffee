@@ -5,7 +5,11 @@
 class CkArray extends Array
   constructor: (items) ->
 
+    # we'd like
+    self = this
+    if items and items instanceof Array then items.forEach (i) -> self.push i
 
+    # initialize the observers
     this.observers = []
 
     # the push handler. This function decorates the 'push' method of

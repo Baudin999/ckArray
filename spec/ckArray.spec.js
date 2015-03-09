@@ -17,6 +17,12 @@
       expect(a).not.toBeUndefined();
       return expect(a instanceof Array).toMatch(/true/);
     });
+    it('should be able to initialize from array', function() {
+      var CkArray, testArray;
+      CkArray = require('./../src/CkArray');
+      testArray = new CkArray([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+      return expect(testArray.length).toEqual(9);
+    });
     it('should have a length property', function() {
       expect(a.length).toBeDefined();
       return expect(a.length).toEqual(0);
