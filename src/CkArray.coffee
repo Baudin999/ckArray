@@ -16,9 +16,9 @@ class CkArray extends Array
     # the array on which my CkArray is based.
     this.push = () ->
       args = Array.prototype.slice.call(arguments)
-      this.observers.map (observer) -> observer.prePush?.apply null, args
+      this.observers.map (observer) -> observer.prePush?.apply this, args
       result = Array.prototype.push.call(this, args)
-      this.observers.map (observer) -> observer.postPush?.apply null, args
+      this.observers.map (observer) -> observer.postPush?.apply this, args
       result
 
 
@@ -26,9 +26,9 @@ class CkArray extends Array
     # the observable splice function
     this.splice = () ->
       args = Array.prototype.slice.call(arguments)
-      this.observers.map (observer) -> observer.preSplice?.apply null, args
+      this.observers.map (observer) -> observer.preSplice?.apply this, args
       result = Array.prototype.splice.apply(this, args)
-      this.observers.map (observer) -> observer.postSplice?.call null, result
+      this.observers.map (observer) -> observer.postSplice?.call this, result
       result
 
 
@@ -36,9 +36,9 @@ class CkArray extends Array
     # an observable slice method
     this.slice = () ->
       args = Array.prototype.slice.call(arguments)
-      this.observers.map (observer) -> observer.preSlice?.apply null, args
+      this.observers.map (observer) -> observer.preSlice?.apply this, args
       result = Array.prototype.slice.apply(this, args)
-      this.observers.map (observer) -> observer.postSlice?.call null, result
+      this.observers.map (observer) -> observer.postSlice?.call this, result
       result
 
 
