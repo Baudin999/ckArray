@@ -30,10 +30,10 @@
           var ref;
           return (ref = observer.preSplice) != null ? ref.apply(null, args) : void 0;
         });
-        result = Array.prototype.splice.call(this, args);
+        result = Array.prototype.splice.apply(this, args);
         this.observers.map(function(observer) {
           var ref;
-          return (ref = observer.postSplice) != null ? ref.apply(null, args) : void 0;
+          return (ref = observer.postSplice) != null ? ref.call(null, result) : void 0;
         });
         return result;
       };

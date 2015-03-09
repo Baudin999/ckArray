@@ -18,12 +18,16 @@ class CkArray extends Array
       result
 
 
+
+    # the observable splice function
     this.splice = () ->
       args = Array.prototype.slice.call(arguments)
       this.observers.map (observer) -> observer.preSplice?.apply null, args
-      result = Array.prototype.splice.call(this, args)
-      this.observers.map (observer) -> observer.postSplice?.apply null, args
+      result = Array.prototype.splice.apply(this, args)
+      this.observers.map (observer) -> observer.postSplice?.call null, result
       result
+
+
 
     # an observable slice method
     this.slice = () ->

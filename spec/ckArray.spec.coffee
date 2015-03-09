@@ -66,3 +66,28 @@ describe 'A test suite for the CkArray class', () ->
     expect(postSlice.length).toEqual(2, 'length is not correct')
 
 
+  # testing "splice"
+  it 'should be able to observe changes from splice', () ->
+
+    CkArray = require './../src/CkArray'
+    a = new CkArray()
+
+    [1,2,3,4,5,6,7,8,9].forEach (n) -> a.push n
+
+    preSplice = undefined
+    postSplice = undefined
+
+    a.observe {
+      preSplice: () -> preSplice = {}
+      postSplice: (items) -> postSplice = items
+    }
+
+    a.splice 4, 3
+
+    expect(preSplice).not.toBeUndefined()
+    expect(postSplice).not.toBeUndefined()
+    expect(postSplice instanceof Array).toMatch(/true/)
+    expect(postSplice.length).toEqual(3, 'length is not correct')
+    expect(a.length).toEqual(6, 'the original array is not modified, it\'s length should be 6')
+
+

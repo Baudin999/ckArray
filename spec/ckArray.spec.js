@@ -44,7 +44,7 @@
       expect(preItem).toEqual(13);
       return expect(postItem).toEqual(13);
     });
-    return it('should be able to observe changes from slice', function() {
+    it('should be able to observe changes from slice', function() {
       var CkArray, postSlice, preSlice;
       CkArray = require('./../src/CkArray');
       a = new CkArray();
@@ -66,6 +66,30 @@
       expect(postSlice).not.toBeUndefined();
       expect(postSlice instanceof Array).toMatch(/true/);
       return expect(postSlice.length).toEqual(2, 'length is not correct');
+    });
+    return it('should be able to observe changes from splice', function() {
+      var CkArray, postSplice, preSplice;
+      CkArray = require('./../src/CkArray');
+      a = new CkArray();
+      [1, 2, 3, 4, 5, 6, 7, 8, 9].forEach(function(n) {
+        return a.push(n);
+      });
+      preSplice = void 0;
+      postSplice = void 0;
+      a.observe({
+        preSplice: function() {
+          return preSplice = {};
+        },
+        postSplice: function(items) {
+          return postSplice = items;
+        }
+      });
+      a.splice(4, 3);
+      expect(preSplice).not.toBeUndefined();
+      expect(postSplice).not.toBeUndefined();
+      expect(postSplice instanceof Array).toMatch(/true/);
+      expect(postSplice.length).toEqual(3, 'length is not correct');
+      return expect(a.length).toEqual(6, 'the original array is not modified, it\'s length should be 6');
     });
   });
 
