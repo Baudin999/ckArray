@@ -7,7 +7,7 @@ describe 'A test suite for the CkArray class', () ->
   it 'should be able to be required', () ->
     CkArray = require './../src/CkArray'
     expect(CkArray).not.toBeNull()
-    expect(CkArray).not.toBeUndefined() 
+    expect(CkArray).not.toBeUndefined()
 
   it 'should be able to create an Array which acts like an Array', () ->
     CkArray = require './../src/CkArray'
