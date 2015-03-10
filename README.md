@@ -22,10 +22,19 @@ You can now pass in an observable by calling something like:
         preSplice:  function(arguments) {},
         postSplice: function(result) {},
     }
+    a.observe( observable );
 
 The ```argument``` value is of course the argument(s) passed into the function. There is no way to cancel the action
 yet in the 'pre' functions. There is no way to rollback yet. The ```result``` value is the result from calling the
 function on the array.
+
+When you call one of the three methods on the Array:
+
+*  push
+*  slice
+*  splice
+
+Your function in the observable will be called. 
 
 ## Planned changes
 There are a few things which I'd like to add to this observable array implementation, I would like a way to cancel and
