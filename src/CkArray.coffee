@@ -17,9 +17,9 @@ class CkArray extends Array
     this.push = () ->
       self = this
       args = Array.prototype.slice.call(arguments)
-      this.observers.map (observer) -> observer.prePush?.apply self, args
+      this.observers.map (observer) -> observer.prePush?.apply observer, args
       result = Array.prototype.push.call(this, args)
-      this.observers.map (observer) -> observer.postPush?.apply self, args
+      this.observers.map (observer) -> observer.postPush?.apply observer, args
       result
 
 
@@ -28,9 +28,9 @@ class CkArray extends Array
     this.splice = () ->
       self = this
       args = Array.prototype.slice.call(arguments)
-      this.observers.map (observer) -> observer.preSplice?.apply self, args
+      this.observers.map (observer) -> observer.preSplice?.apply observer, args
       result = Array.prototype.splice.apply(this, args)
-      this.observers.map (observer) -> observer.postSplice?.call self, result
+      this.observers.map (observer) -> observer.postSplice?.call observer, result
       result
 
 
@@ -39,9 +39,9 @@ class CkArray extends Array
     this.slice = () ->
       self = this
       args = Array.prototype.slice.call(arguments)
-      this.observers.map (observer) -> observer.preSlice?.apply self, args
+      this.observers.map (observer) -> observer.preSlice?.apply observer, args
       result = Array.prototype.slice.apply(this, args)
-      this.observers.map (observer) -> observer.postSlice?.call self, result
+      this.observers.map (observer) -> observer.postSlice?.call observer, result
       result
 
 
