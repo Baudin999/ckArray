@@ -1,6 +1,6 @@
 {
   "name": "ck-array",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A simple observable array for JavaScript Frameworks",
   "main": "src/ckArray.js",
   "scripts": {
